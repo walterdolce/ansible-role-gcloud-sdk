@@ -1,5 +1,5 @@
 ---
-- include: get_key_sudo.yml
+- include_tasks: get_key_sudo.yml
 
 - name: add google cloud key to apt-key
   apt_key: file=/root/A7317B0F.gpg
