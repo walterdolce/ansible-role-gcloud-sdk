@@ -3,7 +3,7 @@
 
 - name: add google cloud key to apt-key
   apt_key: file=/root/A7317B0F.gpg
-  sudo: yes
+  become: yes
 
 - name: sources.list
   template: >
@@ -11,12 +11,12 @@
     dest=/etc/apt/sources.list.d/google-cloud-sdk.list
     force=no
   register: sources_list_result
-  sudo: yes
+  become: yes
 
 # Install apt-transport-https
 - name: install apt-transport-https
   action: "{{backcompat_pkg_mgr}} name=apt-transport-https"
-  sudo: yes
+  become: yes
   register: result_install_transport_https
   until: result_install_transport_https|success
   # Workaround https://github.com/ansible/ansible/issues/16868 and
@@ -27,7 +27,7 @@
 - name: apt-get update
   apt: update_cache=true cache_valid_time=0
   when: sources_list_result.changed
-  sudo: yes
+  become: yes
   register: result_apt_update
   until: result_apt_update|success
   # Workaround https://github.com/ansible/ansible/issues/16868 and
